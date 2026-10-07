@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Video Downloader</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #111827, #1e3a8a);
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: white;
+      border-radius: 22px;
+      padding: 30px 22px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      font-size: 15px;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      outline: none;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .input-box:focus {
+      border-color: #2563eb;
+    }
+
+    .download-btn {
+      width: 100%;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .download-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .download-btn:active {
+      transform: scale(0.98);
+    }
+
+    .message {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .info {
+      margin-top: 25px;
+      padding: 14px;
+      background: #f3f4f6;
+      border-radius: 12px;
+      color: #4b5563;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 20px;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="logo">⬇️</div>
+
+    <h1>Video Downloader</h1>
+
+    <p class="subtitle">
+      আপনার নিজের বা অনুমতিপ্রাপ্ত ভিডিওর Direct URL এখানে দিন
+    </p>
+
+    <input
+      id="videoUrl"
+      class="input-box"
+      type="url"
+      placeholder="https://example.com/video.mp4"
+    >
+
+    <button class="download-btn" onclick="downloadVideo()">
+      ⬇️ Download Video
+    </button>
+
+    <div id="message" class="message"></div>
+
+    <div class="info">
+      ⚠️ শুধুমাত্র নিজের বা ডাউনলোড করার অনুমতি আছে এমন ভিডিও ব্যবহার করুন।
+    </div>
+
+    <footer>
+      © 2026 Video Downloader
+    </footer>
+
+  </div>
+
+  <script>
+    function downloadVideo() {
+
+      const url = document.getElementById("videoUrl").value.trim();
+      const message = document.getElementById("message");
+
+      message.innerHTML = "";
+
+      if (!url) {
+        message.style.color = "red";
+        message.innerHTML = "❌ আগে একটি ভিডিও URL দিন।";
+        return;
+      }
+
+      try {
+        new URL(url);
+      } catch (error) {
+        message.style.color = "red";
+        message.innerHTML = "❌ সঠিক URL দিন।";
+        return;
+      }
+
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "video";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      message.style.color = "green";
+      message.innerHTML = "✅ Download শুরু করার চেষ্টা করা হচ্ছে...";
+    }
+  </script>
+
+</body>
+</html>
